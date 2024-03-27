@@ -1,0 +1,1 @@
+ D:\\HMS\\hmsfrontend\\.dart_tool\\flutter_build\\3410267405bf545e64bc0a8b1aed4873\\native_assets.yaml: 
