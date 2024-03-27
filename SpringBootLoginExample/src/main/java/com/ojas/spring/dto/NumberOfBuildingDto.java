@@ -13,5 +13,5 @@ public class NumberOfBuildingDto {
 
 	private String buildingName;
 	private String buildingAddress;
-	List<Integer> floorId;
+	List<NumberFloorsDto> floors;
 }
