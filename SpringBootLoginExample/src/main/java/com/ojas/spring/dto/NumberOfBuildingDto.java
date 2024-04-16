@@ -14,4 +14,5 @@ public class NumberOfBuildingDto {
 	private String buildingName;
 	private String buildingAddress;
 	List<NumberFloorsDto> floors;
+	private int floorCount;
 }

@@ -1,5 +1,5 @@
 {
-   "checksum": "4029510fb7be12037fd8589e412ecd96",
+   "checksum": "e6c5d52746e17e3eb6da41a708c96311",
    "roots": {
       "bookmark_bar": {
          "children": [  ],
@@ -8,8 +8,7 @@
          "date_modified": "0",
          "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
          "id": "1",
-         "name": "Favorites bar",
-         "source": "unknown",
+         "name": "Bookmarks bar",
          "type": "folder"
       },
       "other": {
@@ -22,8 +21,6 @@
                "power_bookmark_meta": ""
             },
             "name": "Mobile simulator - responsive testing tool",
-            "show_icon": false,
-            "source": "sync",
             "type": "url",
             "url": "https://chromewebstore.google.com/detail/mobile-simulator-responsi/ckejmhbmlajgoklhgbapkiccekfoccmk?hl=en"
          } ],
@@ -32,8 +29,7 @@
          "date_modified": "13345990018905076",
          "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
          "id": "2",
-         "name": "Other favorites",
-         "source": "unknown",
+         "name": "Other bookmarks",
          "type": "folder"
       },
       "synced": {
@@ -43,11 +39,9 @@
          "date_modified": "0",
          "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
          "id": "3",
-         "name": "Mobile favorites",
-         "source": "unknown",
+         "name": "Mobile bookmarks",
          "type": "folder"
       }
    },
-   "sync_metadata": "CosBCg4IiIECEgggdB/FjAEAABIAGlhVVVNCL3Z3bEZ4a0ZNOUdRcW5XdjUzb0JjNHk0WWVMS0JxWml6RnBmdUpIcVJ3NThyR1hLOE92K3poRlA2U0dPemFGZXMzYWRDSFNaV2Fvemt1SFhZZz09KhhsSUoyWUhHa1FORXE1ak9rL0kxTUF3PT1IA6AGChKnAQgHEqIBChxPSXN1NzI3VWlTcmdEL2hrUVVobzJ5Skd0Nmc9EiQ0ZGYxNDg2OS0zY2M5LTQxOTEtYjJjZi1jODcwNDJlM2I3YmYYACAAKAAwn+j9qMwxOJiVmZjEMUCYlZmYxDFKHEl0Q2grRzhhVmtaRVQxa0VRaXZYOUFMMEZXVT1aHiIca1JUL25nNTJiV3BiZXJWcVYwVjAyQktMT0FBPWXHaQdYEokBCAIShAEKHFljU1RvbnZFU1B3cUNzNEwyY3JWaHY2OEw5OD0SJGI1MGVjNjYzLTQyMjAtNTYxNC04YWIxLWFiN2ZmOWNjMWJmMRgAIAAoADD1r8yyjTA4rLHMso0wQKyxzLKNMEocb1BWa2h3QlJiVjY1S0NXUjIrSU9OSFdvT3U4PVoAZQAAAAASiQEIARKEAQoceXhKLzZmdmtlY3I3a3A1RVF6QjR0V0xwZGJFPRIkYmQwOTBhYmItOGE5YS01OTM0LWI1MGEtNjEzYWU0Y2I5MWZlGAAgACgAMPWvzLKNMDiMscyyjTBAjLHMso0wShxhUkNXTGdoRjliNUlucUtJRHZ1Si9qdlFrRmM9WgBlAAAAABKJAQgDEoQBChxuamdEdTg4ZUNydlhwODZwRDdmSEdjcUZwODg9EiRlYjIwNzA1My05ZDU3LTU1MDUtYjYxNC0wNjNmYjAwMjZkNzEYACAAKAAw9a/Mso0wOKiyzLKNMECossyyjTBKHHl6TkIwMWNuNTRBN2NSVTB1VCsvUGdtVHRVbz1aAGUAAAAAMAA4AA==",
    "version": 1
 }

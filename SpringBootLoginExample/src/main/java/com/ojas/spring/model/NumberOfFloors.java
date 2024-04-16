@@ -3,7 +3,9 @@ package com.ojas.spring.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,15 +22,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NumberOfFloors {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int floorId;
-    private String floorName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int floorId;
 
-    @ManyToOne
-    @JoinColumn(name = "building_id") // name of the foreign key column in NumberOfFloors table
-    private NumberOfBuildings numberOfBuildings;
+	@Column(name = "floorName")
+	private String floorName;
 
-    @OneToMany(mappedBy = "numberOfFloors")
-    private List<NumberOfRooms> rooms;
+	@ManyToOne
+	@JoinColumn(name = "buildingId") // name of the foreign key column in NumberOfFloors table
+	private NumberOfBuildings numberOfBuildings;
+
+	@OneToMany(mappedBy = "numberOfFloors", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<NumberOfRooms> rooms;
+
 }

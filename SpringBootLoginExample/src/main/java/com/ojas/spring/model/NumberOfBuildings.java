@@ -3,7 +3,9 @@ package com.ojas.spring.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,14 +19,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class NumberOfBuildings {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int buildingId;
+
 	private String buildingName;
 	private String buildingAddress;
 
-	@OneToMany(mappedBy = "numberOfBuildings")
+	// @OneToMany(mappedBy = "numberOfBuildings")
+	@OneToMany(mappedBy = "numberOfBuildings", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<NumberOfFloors> floors;
+
 }

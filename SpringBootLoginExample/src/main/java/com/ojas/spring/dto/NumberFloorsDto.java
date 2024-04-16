@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NumberFloorsDto {
+	private int floorId;
 	private String floorName;
 	List<NumberOfRoomsDto> listOfRooms;
+	private int roomCount;
 }

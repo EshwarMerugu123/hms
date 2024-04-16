@@ -1,19 +1,20 @@
 package com.ojas.spring.serviceImpl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 import com.ojas.spring.Repository.BuildingRepository;
-import com.ojas.spring.Repository.FloorsRepository;
+import com.ojas.spring.Repository.EmployeeRepository;
 import com.ojas.spring.dto.NumberFloorsDto;
 import com.ojas.spring.dto.NumberOfBuildingDto;
+import com.ojas.spring.dto.NumberOfEmployees;
 import com.ojas.spring.dto.NumberOfRoomsDto;
+import com.ojas.spring.model.Employee;
 import com.ojas.spring.model.NumberOfBuildings;
 import com.ojas.spring.model.NumberOfFloors;
 import com.ojas.spring.model.NumberOfRooms;
@@ -28,53 +29,57 @@ public class BuildingServiceImpl implements BuildingService {
 	private BuildingRepository buildingRepository;
 
 	@Autowired
-	private FloorsRepository floorsRepository;
+	private EmployeeRepository employeeRepository;
 
 	@Override
 	@Transactional
-	public String createBuildings(NumberOfBuildingDto numberOfBuildingsDto) {
-
-		// Create a new NumberOfBuildings object
+	public String createBuildings(NumberOfBuildingDto buildingDto) {
 		NumberOfBuildings building = new NumberOfBuildings();
-		building.setBuildingAddress(numberOfBuildingsDto.getBuildingAddress());
-		building.setBuildingName(numberOfBuildingsDto.getBuildingName());
+		building.setBuildingName(buildingDto.getBuildingName());
+		building.setBuildingAddress(buildingDto.getBuildingAddress());
 
-		// Create a list to store NumberOfFloors objects
-		List<NumberOfFloors> floors = new ArrayList<>();
-		List<NumberOfRooms> rooms = new ArrayList<>();
-
-		// Iterate through the list of floor DTOs and create NumberOfFloors objects
-		for (NumberFloorsDto floorDto : numberOfBuildingsDto.getFloors()) {
-
-			// setting the floor data
+		List<NumberOfFloors> floorsList = new ArrayList<>();
+		for (NumberFloorsDto floorsDto : buildingDto.getFloors()) {
 			NumberOfFloors floor = new NumberOfFloors();
-			floor.setFloorName(floorDto.getFloorName());
+			floor.setFloorName(floorsDto.getFloorName());
 			floor.setNumberOfBuildings(building);
 
-			for (NumberOfRoomsDto numberOfroomsdto : floorDto.getListOfRooms()) {
+			List<NumberOfRooms> roomsList = new ArrayList<>();
+			for (NumberOfRoomsDto roomsDto : floorsDto.getListOfRooms()) {
+				NumberOfRooms room = new NumberOfRooms();
+				room.setRoomName(roomsDto.getRoomName());
+				room.setNumberOfFloors(floor);
 
-				// setting the rooms data
-				NumberOfRooms numberOfRooms = new NumberOfRooms();
-				numberOfRooms.setRoomName(numberOfroomsdto.getRoomName());
-				numberOfRooms.setNumberOfFloors(floor);
-				rooms.add(numberOfRooms);
+				List<NumberOfEmployees> employees = roomsDto.getNumberOfEmployees() != null
+						? roomsDto.getNumberOfEmployees()
+						: Collections.emptyList();
+				List<Employee> employeeList = new ArrayList<>();
+				for (NumberOfEmployees employeeDto : employees) {
+					Employee employee = new Employee();
+					employee.setEmployeeName(employeeDto.getEmployeeName());
+					employee.setEmail(employeeDto.getEmail());
+					employee.setAge(employeeDto.getAge());
+					employee.setGender(employeeDto.getGender());
+					employee.setPassword(employeeDto.getPassword());
+					employee.setEmployeeAddress(employeeDto.getEmployeeAddress());
+
+					// setting room obj into employee
+					employee.setNumberOfRooms(room);
+
+					employeeList.add(employee);
+					System.out.println("employeeList is:" + employee);
+				}
+
+				room.setEmployee(employeeList);
+				roomsList.add(room);
 			}
-			floor.setRooms(rooms);
-
-			floors.add(floor);
+			floor.setRooms(roomsList);
+			floorsList.add(floor);
 		}
-
-		// Set the list of floors to the building
-		building.setFloors(floors);
-
-		// Save the building entity along with its floors
-		NumberOfBuildings savedBuilding = buildingRepository.save(building);
-
-		if (savedBuilding != null) {
-			return "Building inserted successfully";
-		} else {
-			return "Failed to insert building";
-		}
+		building.setFloors(floorsList);
+		// Save the building
+		buildingRepository.save(building);
+		return "Buildings created successfully.";
 	}
 
 	@Override
@@ -92,20 +97,38 @@ public class BuildingServiceImpl implements BuildingService {
 	@Override
 	@Transactional
 	public List<NumberOfBuildingDto> getAllBuildings() {
-		List<NumberOfBuildings> numberOfBuildings = buildingRepository.findAll();
-
-		return numberOfBuildings.stream().map(building -> {
+		List<NumberOfBuildingDto> buildingDtos = buildingRepository.findAll().stream().map(building -> {
 			NumberOfBuildingDto buildingDto = new NumberOfBuildingDto();
+
 			buildingDto.setBuildingAddress(building.getBuildingAddress());
 			buildingDto.setBuildingName(building.getBuildingName());
+			buildingDto.setFloorCount(building.getFloors().size());
 
 			List<NumberFloorsDto> floorDtos = building.getFloors().stream().map(floor -> {
+
 				NumberFloorsDto floorDto = new NumberFloorsDto();
+				floorDto.setFloorId(floor.getFloorId());
 				floorDto.setFloorName(floor.getFloorName());
+				floorDto.setRoomCount(floor.getRooms().size());
 
 				List<NumberOfRoomsDto> roomDtos = floor.getRooms().stream().map(room -> {
 					NumberOfRoomsDto roomDto = new NumberOfRoomsDto();
+					roomDto.setRoomId(room.getRoomId());
 					roomDto.setRoomName(room.getRoomName());
+					roomDto.setEmployeesCount(room.getEmployee().size());
+
+					List<NumberOfEmployees> employeesDTO = room.getEmployee().stream().map(emp -> {
+						NumberOfEmployees empDTO = new NumberOfEmployees();
+						empDTO.setEmployeeName(emp.getEmployeeName());
+						empDTO.setEmail(emp.getEmail());
+						empDTO.setEmployeeAddress(emp.getEmployeeAddress());
+						empDTO.setGender(emp.getGender());
+						empDTO.setPassword(emp.getPassword());
+
+						return empDTO;
+					}).collect(Collectors.toList());
+
+					roomDto.setNumberOfEmployees(employeesDTO);
 					return roomDto;
 				}).collect(Collectors.toList());
 
@@ -116,6 +139,8 @@ public class BuildingServiceImpl implements BuildingService {
 			buildingDto.setFloors(floorDtos);
 			return buildingDto;
 		}).collect(Collectors.toList());
+
+		return buildingDtos;
 	}
 
 }

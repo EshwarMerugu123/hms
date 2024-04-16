@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ojas.spring.dto.NumberFloorsDto;
 import com.ojas.spring.dto.NumberOfRoomsDto;
+import com.ojas.spring.dto.RoomDTO;
 
 public interface RoomsService {
 
@@ -13,5 +14,5 @@ public interface RoomsService {
 
 	public String updateRooms(int roomId);
 
-	List<NumberOfRoomsDto> getAllRooms();
+	List<RoomDTO> getAllRooms();
 }
